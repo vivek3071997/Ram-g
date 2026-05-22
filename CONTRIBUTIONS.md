@@ -8,7 +8,7 @@ To maintain high code quality, biological and physical realism, and robust Objec
 
 ## 1. Technical Framework & OOP Paradigm
 
-All gameplay systems are built upon **Unreal Engine 5.4 C++** and must adhere strictly to established Object-Oriented Programming (OOP) paradigms:
+All gameplay systems are built upon **Unreal Engine 5.7.4 C++** and must adhere strictly to established Object-Oriented Programming (OOP) paradigms:
 
 - **Encapsulation**: Limit access to internal variables (like biological rates, cardiac flow, and ATP reserves). Maintain protected/private scope and expose public configurations via `UPROPERTY` specifiers and controlled, read-only `UFUNCTION(BlueprintPure)` getters.
 - **Inheritance Hierarchy**: Extends the core framework rather than rewriting it. Subclass specialized characters (e.g., `AHanumanCharacter`) from the foundational base character `ARamGCharacter`.
@@ -52,7 +52,7 @@ We enforce a clean git lineage:
 
 Before proposing any changes, verify code reliability and mechanical balance:
 1. Make sure your C++ code compiles successfully in your IDE (VS2022 / Rider).
-2. Launch the Unreal Engine 5.4 Editor.
+2. Launch the Unreal Engine 5.7.4 Editor.
 3. Call `AMission0GameMode::RunMissionDiagnostic()` via console command or blueprints.
 4. Verify that all 5 baseline checks (Hanuman Active, Double Jump configured, Grapple limit check, Fruit Basket storage incrementing, and Vajra Nerf biological locks) report `[PASS]`.
 5. Attach the diagnostic output logs to your PR description.

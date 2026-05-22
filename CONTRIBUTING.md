@@ -8,7 +8,7 @@ To maintain code quality, gameplay immersion, and technological alignment with o
 
 ## 1. Coding Standards & OOP Principles
 
-All gameplay systems are written in **Unreal Engine 5.4 C++** and must adhere to clean, production-ready Object-Oriented Programming (OOP) paradigms.
+All gameplay systems are written in **Unreal Engine 5.7.4 C++** and must adhere to clean, production-ready Object-Oriented Programming (OOP) paradigms.
 
 ### Object-Oriented Principles to Follow:
 - **Encapsulation**: Keep character statistics and physiological variables protected/private where possible, exposing them via controlled `UFUNCTION(BlueprintPure)` getters.

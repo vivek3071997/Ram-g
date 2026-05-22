@@ -15,7 +15,7 @@ Closes # (issue number)
 - Are physiological metrics (stamina, lactic acid, cardiac output, focus) appropriately scaled?
 
 ## Verification & Playtest Logs
-- [ ] Compiled successfully in Unreal Engine 5.4 / VS2022.
+- [ ] Compiled successfully in Unreal Engine 5.7.4 / VS2022.
 - [ ] Executed `AMission0GameMode::RunMissionDiagnostic()` and all tests returned `[PASS]`.
 - Please paste your diagnostic logs below:
 ```text

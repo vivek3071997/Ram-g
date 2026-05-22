@@ -1,7 +1,7 @@
 # Ram-G: Grounded 21st-Century Epic Action-Adventure
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
-[![Unreal Engine](https://img.shields.io/badge/Unreal%20Engine-5.4-blue.svg)](https://www.unrealengine.com)
+[![Unreal Engine](https://img.shields.io/badge/Unreal%20Engine-5.7.4-blue.svg)](https://www.unrealengine.com)
 
 **Ram-G** is a grounded, scientific 21st-century action-adventure retelling of the traditional Sanskrit epic **Ramayana**. 
 
@@ -11,7 +11,7 @@ Unlike conventional high-fantasy representations, this game establishes realisti
 
 ## 🚀 Technical Highlights & OOP Architecture
 
-The core gameplay code is written in clean, production-grade **Unreal Engine 5.4 C++** and is structured to enforce strong Object-Oriented Programming (OOP) paradigms:
+The core gameplay code is written in clean, production-grade **Unreal Engine 5.7.4 C++** and is structured to enforce strong Object-Oriented Programming (OOP) paradigms:
 
 - **Biomechanical Physiological Pools**: Tracks heart rate, cardiovascular output, lactic acid buildup, reaction delay (neurological latency), and ATP replenishment rates dynamically inside C++.
 - **Physical Weapon & Ranged Hierarchy (`ARamGWeapon`, `ARamGBow`, `ARamGMeleeWeapon`)**: Tiers of ranged longbows (Kodanda, Pinaka) with accurate arrow trajectory drops, and heavy melee weapons (Chandrahasa, Kaumodaki mace, Parashu axe) with custom block-bypassing and ground slam sweeping physics.
@@ -39,7 +39,7 @@ The Prologue mission, **Hanuman's Solar Leap**, serves as a playable tutorial in
 ## 🛠️ Project Setup & Compilation
 
 ### Requirements:
-- **Unreal Engine 5.4**
+- **Unreal Engine 5.7.4**
 - **Visual Studio 2022** (with Game Development C++ workloads)
 - **Git**
 

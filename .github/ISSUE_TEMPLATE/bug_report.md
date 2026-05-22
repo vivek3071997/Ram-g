@@ -31,7 +31,7 @@ Does this issue impact physiological parameters or physical simulation?
 - **Detailed Mechanics**: (e.g., "Hanuman's lactic acid accumulation reached critical lock state but failed to decelerate walk speed to 250 units.")
 
 ## Environment & Build Info
-- **Unreal Engine Version**: 5.4
+- **Unreal Engine Version**: 5.7.4
 - **Operating System**: Windows
 - **Build Target**: [ ] Development Editor [ ] Development Client [ ] Shipping
 - **IDE**: [ ] Visual Studio 2022 [ ] Rider [ ] Other
