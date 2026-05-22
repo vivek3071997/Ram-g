@@ -1,0 +1,43 @@
+# =========================================================================
+# Unreal Engine 5 Git Ignore Configuration for Ram-G
+# =========================================================================
+
+# Exclude compiled binaries & intermediate build artifacts
+Binaries/
+Build/
+Intermediate/
+Saved/
+DerivedDataCache/
+
+# Exclude generated Visual Studio solution & project configurations
+.vs/
+*.sln
+*.suo
+*.opensdf
+*.sdf
+*.VC.db
+*.VC.opendb
+
+# Exclude generated JetBrains Rider configurations
+.idea/
+*.sln.iml
+
+# Exclude local user settings and lock files
+**/Saved/
+Architecture/
+Recovery/
+**/Intermediate/ProjectFiles/
+
+# Exclude temporary cooking logs and packaging outputs
+**/Build/Android/
+**/Build/IOS/
+
+# Allow C++ Source code, Config, and Content directories
+!Source/
+!Config/
+!Content/
+!Resources/
+
+# Ignore system files and store databases
+.DS_Store
+Thumbs.db

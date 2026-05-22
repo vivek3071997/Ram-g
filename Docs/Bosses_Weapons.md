@@ -1,2 +1,36 @@
-"I've completed exhaustive web research on all requested Ramayana topics for the Ram-G game. Here is the comprehensive compiled research:\n\n---\n\n# RAM-G GAME RESEARCH: RAMAYANA COMBAT, BOSSES, WEAPONS & LORE\n\n---\n\n## PART 1: BOSS ENCOUNTERS (10 ACTS)\n\n### ACT 1 BOSS: TATAKA (Demoness of the Forest)\n\n**Description:** Tataka was originally a beautiful Yakshini (nature spirit) who was cursed and transformed into a hideous, fearsome demoness. She terrorized the Dandaka forest region, preventing sages from performing sacred rituals.\n\n**Powers & Abilities:**\n- Strength of 1,000 elephants (boon from Brahma)\n- Shape-shifting — can assume various monstrous forms\n- Invisibility — can vanish during combat\n- Environmental manipulation — summons dust storms, rains boulders and trees\n- Enhanced combat prowess — continues fighting even when maimed\n- Black magic mastery (Maya)\n\n**Attack Patterns:**\n- Phase 1: Creates dust storms, rains boulders and debris on the player\n- Phase 2: Uses invisibility to ambush, launching surprise attacks from hidden positions\n- Phase 3: After being wounded (arms severed, nose/ears cut), uses full invisibility + boulder rain combo\n- Power increases after sunset — time-pressure mechanic\n\n**Weaknesses:**\n- Sound-based tracking (Shabda-bhedi vidya) — she can be located by sound when invisible\n- Must be defeated before sunset when her power amplifies\n- Physically vulnerable when forced to reveal herself\n\n**Original Defeat:** Rama used Shabda-bhedi vidya (the art of targeting by sound alone) to track her invisible form and pierced her heart with an arrow before sunset.\n\n**Game Mechanics:**\n- Sound/audio-based tracking system to find invisible enemy\n- Sunset timer creating urgency\n- Precision targeting of limbs (arms) to weaken attacks\n- Environmental hazard dodging (boulders, storms)\n- \"Divine Sight\" ability unlock to track her final invisible phase\n\n---\n\n### ACT 2 BOSS: THE PINAKA (Shiva's Bow) — Puzzle/Challenge Boss\n\n**Description:** The cel
-<truncated 36026 bytes>
+# Ram-G: Bosses & Weapons Database Index
+
+This document serves as the master GDD database for all weapons, divine astras, and boss encounters in **Ram-G**, mapping their combat parameters and linking to their detailed, individual profile sheets under the `Docs/Weapons/` folder.
+
+---
+
+## 1. Modular Weapons Database
+
+Each weapon has a dedicated, highly detailed profile covering its mythological background, GDD combat statistics, visual effects (VFX), and unique Audio Design (SFX and soundtracks).
+
+### A. Ranged & Bows
+*   **[Kodanda Bow (Lord Rama's Arch)](file:///c:/Ram-G%20The%20game%20based%20on%20bharat%20mythical%20story%20ramayana/Docs/Weapons/Kodanda.md):** The primary upgradable ranged weapon of the protagonist. Uses solar-guided arrows.
+*   **[Pinaka Bow (Lord Shiva's Siege Arch)](file:///c:/Ram-G%20The%20game%20based%20on%20bharat%20mythical%20story%20ramayana/Docs/Weapons/Pinaka.md):** A colossal, heavy gravity bow that serves as the central puzzle challenge of Act 2.
+
+### B. Melee Weapons
+*   **[Chandrahasa Greatsword (Ravana's Moon-Blade)](file:///c:/Ram-G%20The%20game%20based%20on%20bharat%20mythical%20story%20ramayana/Docs/Weapons/Chandrahasa.md):** A heavy, curved crescent sword that ignores physical blocking, requiring perfect parrying.
+*   **[Kaumodaki Gada (Hanuman's Golden Mace)](file:///c:/Ram-G%20The%20game%20based%20on%20bharat%20mythical%20story%20ramayana/Docs/Weapons/Kaumodaki_Gada.md):** A massive, high-impact war mace designed for earth-shaking ground slams and crowd sweeps.
+*   **[Parashu Axe (Parashurama's Battleaxe)](file:///c:/Ram-G%20The%20game%20based%20on%20bharat%20mythical%20story%20ramayana/Docs/Weapons/Parashu_Axe.md):** A volcanic, high-damage axe used in the Act 2 avatar testing duel.
+
+### C. Divine Elemental Astras
+*   **[Brahmastra (Supreme Cosmis Finisher)](file:///c:/Ram-G%20The%20game%20based%20on%20bharat%20mythical%20story%20ramayana/Docs/Weapons/Brahmastra.md):** The ultimate, absolute-damage cosmic missile used to defeat Ravana's core.
+*   **[Agneyastra (Explosive Fire Arrow)](file:///c:/Ram-G%20The%20game%20based%20on%20bharat%20mythical%20story%20ramayana/Docs/Weapons/Agneyastra.md):** Summoning pure volcanic heat for wide-area fire explosions.
+*   **[Varunastra (Rainstorm Purifier Arrow)](file:///c:/Ram-G%20The%20game%20based%20on%20bharat%20mythical%20story%20ramayana/Docs/Weapons/Varunastra.md):** Swirling liquid torrents to extinguish fire barriers and heal companions.
+*   **[Vayavyastra (Cyclone Storm Arrow)](file:///c:/Ram-G%20The%20game%20based%20on%20bharat%20mythical%20story%20ramayana/Docs/Weapons/Vayavyastra.md):** Spawning tornado wind columns to disperse toxic smoke and reveal hidden enemies.
+*   **[Garudastra (Celestial Purge Summon)](file:///c:/Ram-G%20The%20game%20based%20on%20bharat%20mythical%20story%20ramayana/Docs/Weapons/Garudastra.md):** Invoking Garuda's avian spirit to dissolve poison grids and purge snake bindings.
+
+### D. Spears & Snare Weapons
+*   **[Nagapasha (Indrajit's Serpent Noose)](file:///c:/Ram-G%20The%20game%20based%20on%20bharat%20mythical%20story%20ramayana/Docs/Weapons/Nagapasha.md):** A crowd-control snare that binds targets in glowing venomous snakes.
+*   **[Trishula (Ravana's Red-Lightning Spear)](file:///c:/Ram-G%20The%20game%20based%20on%20bharat%20mythical%20story%20ramayana/Docs/Weapons/Trishula.md):** A heavy throwing spear that splits into three homing crimson lightning streaks.
+*   **[Shakti Lance (Indrajit's Near-Fatal Spear)](file:///c:/Ram-G%20The%20game%20based%20on%20bharat%20mythical%20story%20ramayana/Docs/Weapons/Shakti_Lance.md):** An invincible projectile that inflicts a mortal-bleed status effect.
+
+---
+
+## 2. Boss Encounters Overview
+
+The bosses in **Ram-G** utilize specialized combinations of these modular weapons to challenge player strategies. For a detailed chronological breakdown of boss mechanics, phases, and combat locations across the campaign, please refer to the [Story Acts Index](file:///c:/Ram-G%20The%20game%20based%20on%20bharat%20mythical%20story%20ramayana/Docs/Story_Acts.md).
