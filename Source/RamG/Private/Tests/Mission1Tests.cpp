@@ -15,7 +15,7 @@
  * Prince Rama's Valkala Bow stamina draw, Shabda-Bhedi focus, Vedic Altar
  * sun-mirror puzzles, and Mithila disarmament locks.
  */
-IMPLEMENT_SIMPLE_AUTOMATION_TEST(FMission1DiagnosticsTest, "RamG.Missions.Mission1.Diagnostics", EAutomationTestFlags::ApplicationContextMask | EAutomationTestFlags::ProductFilter)
+IMPLEMENT_SIMPLE_AUTOMATION_TEST(FMission1DiagnosticsTest, "RamG.Missions.Mission1.Diagnostics", EAutomationTestFlags::EditorContext | EAutomationTestFlags::ProductFilter)
 
 bool FMission1DiagnosticsTest::RunTest(const FString& Parameters)
 {

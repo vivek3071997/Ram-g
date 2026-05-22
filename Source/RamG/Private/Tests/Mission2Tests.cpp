@@ -15,7 +15,7 @@
  * Princess Sita's Earth Aura Spandan, Ganga-Jal flask gopher purification,
  * Pinaka chest Ley-Line gravity puzzles, and the Valkala Swap exile nerfs.
  */
-IMPLEMENT_SIMPLE_AUTOMATION_TEST(FMission2DiagnosticsTest, "RamG.Missions.Mission2.Diagnostics", EAutomationTestFlags::ApplicationContextMask | EAutomationTestFlags::ProductFilter)
+IMPLEMENT_SIMPLE_AUTOMATION_TEST(FMission2DiagnosticsTest, "RamG.Missions.Mission2.Diagnostics", EAutomationTestFlags::EditorContext | EAutomationTestFlags::ProductFilter)
 
 bool FMission2DiagnosticsTest::RunTest(const FString& Parameters)
 {

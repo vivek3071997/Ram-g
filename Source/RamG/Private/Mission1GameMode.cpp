@@ -61,7 +61,6 @@ void AMission1GameMode::ExecuteCourtlyDisarmament(ARamaCharacter* Rama)
 	Rama->SurrenderAllWeapons();
 
 	// Transition control to Princess Sita after 3 seconds
-	FTimerHandle SwapTimer;
 	GetWorldTimerManager().SetTimer(SwapTimer, FTimerDelegate::CreateLambda([this]() {
 		SetMissionState(EMission1State::SitaReveal);
 		UE_LOG(LogTemp, Warning, TEXT("[PROLOGUE MISSION 1 COMPLETED] Prince Rama's youth guard completed. Transitioning to Sita Mithila saga."));
@@ -175,6 +174,7 @@ void AMission1GameMode::RunMission1Diagnostic()
 		}
 
 		// Restore original state
+		GetWorldTimerManager().ClearTimer(SwapTimer);
 		CurrentMissionState = SavedState;
 		Rama->bWeaponsLocked = false;
 		Rama->IronPointArrows = 30;

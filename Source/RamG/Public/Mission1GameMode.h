@@ -44,4 +44,8 @@ public:
 	/** Runs the automated test diagnostic suite for Prince Rama's C++ components */
 	UFUNCTION(BlueprintCallable, Category = "RamG | Diagnostics")
 	void RunMission1Diagnostic();
+
+private:
+	/** Active timer handle for transition swaps */
+	FTimerHandle SwapTimer;
 };

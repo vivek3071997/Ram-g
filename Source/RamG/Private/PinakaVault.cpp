@@ -77,7 +77,7 @@ float APinakaVault::GetCurrentEffectiveGravityForce() const
 	return NetGravity;
 }
 
-bool APinakaVault::TryLiftAndPushChest(AActor* Instigator)
+bool APinakaVault::TryLiftAndPushChest(AActor* PushingActor)
 {
 	float Alignment = GetAlignmentRatio();
 	
@@ -85,13 +85,13 @@ bool APinakaVault::TryLiftAndPushChest(AActor* Instigator)
 	if (Alignment >= 0.95f)
 	{
 		bChestDisplaced = true;
-		UE_LOG(LogTemp, Error, TEXT("[PINAKA VAULT SUCCESS] Gravity neutralized! %s effortlessly slides the million-ton Pinaka chest aside with one hand! Retrieving lost ball..."), *Instigator->GetName());
+		UE_LOG(LogTemp, Error, TEXT("[PINAKA VAULT SUCCESS] Gravity neutralized! %s effortlessly slides the million-ton Pinaka chest aside with one hand! Retrieving lost ball..."), PushingActor ? *PushingActor->GetName() : TEXT("Unknown"));
 		return true;
 	}
 	else
 	{
 		float GravityForceTons = GetCurrentEffectiveGravityForce() / 9810.f; // Convert force to tons
-		UE_LOG(LogTemp, Warning, TEXT("[PINAKA VAULT FAILED] Gravity seals are active! Chest weighs %.2f tons. %s cannot move the chest."), GravityForceTons, *Instigator->GetName());
+		UE_LOG(LogTemp, Warning, TEXT("[PINAKA VAULT FAILED] Gravity seals are active! Chest weighs %.2f tons. %s cannot move the chest."), GravityForceTons, PushingActor ? *PushingActor->GetName() : TEXT("Unknown"));
 		return false;
 	}
 }

@@ -61,4 +61,7 @@ public:
 
 private:
 	float StateTimer = 0.f;
+
+	/** Active timer handle for transition reveals */
+	FTimerHandle RevealTimer;
 };

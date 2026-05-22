@@ -176,8 +176,8 @@ void AHanumanCharacter::UpdateGrapplePhysics(float DeltaTime)
 	// Swing tension force
 	FVector TensionForce = PullDirection * (CurrentDistance * GrappleSwingStiffness) - (Velocity * GrappleSwingDampening);
 	
-	// Add gravity compensation to give feeling of swing float
-	TensionForce.Z += 980.f * GetCharacterMovement()->GravityScale * DeltaTime * 60.f;
+	// Add gravity compensation to give feeling of swing float (frame-rate independent acceleration)
+	TensionForce.Z += 980.f * GetCharacterMovement()->GravityScale;
 
 	GetCharacterMovement()->Velocity += TensionForce * DeltaTime;
 

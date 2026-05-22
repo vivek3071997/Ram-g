@@ -5,6 +5,7 @@
 #include "Kismet/GameplayStatics.h"
 #include "Engine/World.h"
 #include "DrawDebugHelpers.h"
+#include "Engine/OverlapResult.h"
 
 ASitaCharacter::ASitaCharacter()
 {

@@ -61,5 +61,5 @@ public:
 
 	/** Checks gravity force and lifts/pushes chest aside */
 	UFUNCTION(BlueprintCallable, Category = "Pinaka | Puzzle Actions")
-	bool TryLiftAndPushChest(AActor* Instigator);
+	bool TryLiftAndPushChest(AActor* PushingActor);
 };

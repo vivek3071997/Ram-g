@@ -172,6 +172,6 @@ void ATyakshaEnemy::TakeNonLethalStrike(float Damage, float PostureDmg, AActor* 
 		FTimerHandle DestroyTimer;
 		GetWorldTimerManager().SetTimer(DestroyTimer, [this]() {
 			Destroy();
-		}, 1.2s, false);
+		}, 1.2f, false);
 	}
 }

@@ -14,7 +14,7 @@
  * Unreal Engine C++ Automation Test verifying Mission 0 Core Gameplay Logic,
  * Grounded Biomechanical limits, Vajra Nerf states, and level generator layouts.
  */
-IMPLEMENT_SIMPLE_AUTOMATION_TEST(FMission0DiagnosticsTest, "RamG.Missions.Mission0.Diagnostics", EAutomationTestFlags::ApplicationContextMask | EAutomationTestFlags::ProductFilter)
+IMPLEMENT_SIMPLE_AUTOMATION_TEST(FMission0DiagnosticsTest, "RamG.Missions.Mission0.Diagnostics", EAutomationTestFlags::EditorContext | EAutomationTestFlags::ProductFilter)
 
 bool FMission0DiagnosticsTest::RunTest(const FString& Parameters)
 {
@@ -105,13 +105,13 @@ bool FMission0DiagnosticsTest::RunTest(const FString& Parameters)
 		Hanuman->FruitsCollected = InitialFruitsCount;
 
 		// 4e. Verify Vajra Nerf impact transition and biological locking
-		EMission0State SavedState = MissionGameMode->GetCurrentMissionState();
+		EMission0State SavedState = MissionGameMode->CurrentMissionState;
 		float SavedWalkSpeed = Hanuman->GetCharacterMovement()->MaxWalkSpeed;
 
 		// Trigger the strike
 		MissionGameMode->TriggerVajraNerfSequence();
 
-		TestEqual(TEXT("Vajra Strike must set GameMode state to VajraNerf"), MissionGameMode->GetCurrentMissionState(), EMission0State::VajraNerf);
+		TestEqual(TEXT("Vajra Strike must set GameMode state to VajraNerf"), MissionGameMode->CurrentMissionState, EMission0State::VajraNerf);
 		TestEqual(TEXT("Vajra Strike must limit movement to crawl (MaxWalkSpeed = 250)"), Hanuman->GetCharacterMovement()->MaxWalkSpeed, 250.f);
 		TestEqual(TEXT("Vajra Strike must restrict jumping to a single jump"), Hanuman->MaxJumpCount, 1);
 		TestEqual(TEXT("Vajra Strike must lock grapple range to zero"), Hanuman->GrappleMaxRange, 0.f);

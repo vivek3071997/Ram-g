@@ -7,6 +7,7 @@
 #include "IndraBoss.h"
 #include "Engine/World.h"
 #include "Kismet/GameplayStatics.h"
+#include "Engine/OverlapResult.h"
 
 // Sets default values
 AMission0WorldGenerator::AMission0WorldGenerator()

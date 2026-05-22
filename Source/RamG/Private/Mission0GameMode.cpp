@@ -110,7 +110,6 @@ void AMission0GameMode::TriggerVajraNerfSequence()
 	}
 
 	// Wait 3 seconds and pan to Ayodhya Rama Reveal
-	FTimerHandle RevealTimer;
 	GetWorldTimerManager().SetTimer(RevealTimer, this, &AMission0GameMode::TriggerRamaReveal, 3.0f, false);
 }
 
@@ -194,6 +193,7 @@ void AMission0GameMode::RunMissionDiagnostic()
 		}
 		
 		// Restore state
+		GetWorldTimerManager().ClearTimer(RevealTimer);
 		SetMissionState(SavedState);
 		Hanuman->MaxJumpCount = 2;
 		Hanuman->GetCharacterMovement()->MaxWalkSpeed = 700.f;

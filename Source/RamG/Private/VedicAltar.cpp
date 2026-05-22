@@ -21,7 +21,7 @@ void AVedicAltar::BeginPlay()
 {
 	Super::BeginPlay();
 	
-	UE_LOG(LogTemp, Warning, TEXT("[VEDIC ALTAR] Altar initialized with Fire Integrity 100%. Three mirrors misaligned."));
+	UE_LOG(LogTemp, Warning, TEXT("[VEDIC ALTAR] Altar initialized with Fire Integrity 100%%. Three mirrors misaligned."));
 }
 
 void AVedicAltar::RotateMirror(int32 MirrorIndex, float AngleDelta)
@@ -45,7 +45,7 @@ void AVedicAltar::RotateMirror(int32 MirrorIndex, float AngleDelta)
 	{
 		bIsZonePurified = true;
 		AltarIntegrity = 100.f; // Fully cleanses altar fire
-		UE_LOG(LogTemp, Warning, TEXT("[YAGNA PURIFIED] Excellent! All three Sun-Mirrors aligned at %f degrees! concentrated light focused. Altar purified."));
+		UE_LOG(LogTemp, Warning, TEXT("[YAGNA PURIFIED] Excellent! All three Sun-Mirrors aligned at %f degrees! concentrated light focused. Altar purified."), RequiredAlignmentAngle);
 	}
 	else
 	{
