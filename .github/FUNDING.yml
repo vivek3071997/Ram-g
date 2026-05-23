@@ -17,12 +17,14 @@ github: vivek3071997
 # Ko-fi — one-time or recurring coffee donations (https://ko-fi.com/viv9k)
 ko_fi: viv9k
 
-# Patreon — tiered monthly support (https://patreon.com/RamG_ThegamebasedonRamayana)
-patreon: RamG_ThegamebasedonRamayana
+# Patreon — using full creator URL (/c/ format not supported by patreon: key)
+# patreon: RamG_ThegamebasedonRamayana
 
 # Open Collective — transparent community funding
 # open_collective: ram-g-game
 
-# Custom funding links — add campaign or portfolio pages
+# Custom funding links
 custom:
+  - https://www.patreon.com/c/RamG_ThegamebasedonRamayana
+  - https://ko-fi.com/viv9k
   - https://github.com/vivek3071997/Ram-g
