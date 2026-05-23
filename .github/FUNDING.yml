@@ -1,0 +1,30 @@
+# ============================================================
+# Ram-G | Funding & Support Configuration
+# A game based on the Bharat mythical story — Ramayana
+# ============================================================
+# This file enables the "Sponsor" button on the GitHub repo.
+# Supporters help fund art, audio, development & cultural research.
+#
+# Supported platforms by GitHub:
+# github, patreon, open_collective, ko_fi, tidelift,
+# community_bridge, liberapay, issuehunt, otechie,
+# lfx_crowdfunding, custom
+# ============================================================
+
+# GitHub Sponsors (https://github.com/sponsors/vivek3071997)
+github: vivek3071997
+
+# Ko-fi — one-time or recurring coffee donations
+# Sign up at https://ko-fi.com and replace with your handle
+# ko_fi: your_kofi_username
+
+# Patreon — tiered monthly support
+# Sign up at https://patreon.com and replace with your handle
+# patreon: your_patreon_username
+
+# Open Collective — transparent community funding
+# open_collective: ram-g-game
+
+# Custom funding links — add campaign or portfolio pages
+custom:
+  - https://github.com/vivek3071997/Ram-g
