@@ -1,0 +1,1027 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ram-G Dev Blog — Building a Game from the Ramayana</title>
+  <meta name="description" content="An indie dev's journey building Ram-G — an action-adventure game rooted in the Valmiki Ramayana. Read about the vision, Mission 0, characters, and how AI is accelerating development." />
+  <meta property="og:title" content="Ram-G Dev Blog — Building a Game from the Ramayana" />
+  <meta property="og:description" content="The first devlog for Ram-G — an epic action-adventure game rooted in the Valmiki Ramayana." />
+  <meta property="og:type" content="article" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Inter:wght@300;400;500;600&family=Noto+Sans+Devanagari:wght@400;600&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --gold: #d4a843;
+      --gold-light: #f0c060;
+      --gold-dim: #a07830;
+      --saffron: #e8721c;
+      --deep-red: #8b1a1a;
+      --bg-dark: #080810;
+      --bg-card: rgba(255,255,255,0.04);
+      --bg-card-hover: rgba(255,255,255,0.07);
+      --border: rgba(212,168,67,0.2);
+      --border-bright: rgba(212,168,67,0.5);
+      --text-primary: #f0e8d0;
+      --text-secondary: #a09070;
+      --text-dim: #60503a;
+      --glow: 0 0 40px rgba(212,168,67,0.15);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg-dark);
+      color: var(--text-primary);
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    /* ── Particle Canvas ── */
+    #particles {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ── Hero ── */
+    .hero {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 2rem;
+      z-index: 1;
+      background: radial-gradient(ellipse at 50% 0%, rgba(212,168,67,0.12) 0%, transparent 70%),
+                  radial-gradient(ellipse at 80% 100%, rgba(232,114,28,0.08) 0%, transparent 60%);
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23d4a843' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+      opacity: 0.6;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(212,168,67,0.1);
+      border: 1px solid var(--border-bright);
+      border-radius: 100px;
+      padding: 6px 18px;
+      font-size: 0.78rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 2rem;
+      animation: fadeDown 0.8s ease both;
+    }
+
+    .hero-badge span { width: 6px; height: 6px; border-radius: 50%; background: var(--gold); animation: pulse 2s infinite; }
+
+    .hero-sanskrit {
+      font-family: 'Noto Sans Devanagari', sans-serif;
+      font-size: clamp(1.1rem, 2.5vw, 1.5rem);
+      color: var(--gold-dim);
+      margin-bottom: 1rem;
+      animation: fadeDown 0.9s ease 0.1s both;
+      letter-spacing: 0.05em;
+    }
+
+    .hero h1 {
+      font-family: 'Cinzel', serif;
+      font-size: clamp(3rem, 8vw, 6.5rem);
+      font-weight: 900;
+      background: linear-gradient(135deg, var(--gold-light) 0%, var(--gold) 40%, var(--saffron) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      line-height: 1.05;
+      margin-bottom: 0.3rem;
+      animation: fadeDown 1s ease 0.2s both;
+      text-shadow: none;
+      filter: drop-shadow(0 0 30px rgba(212,168,67,0.4));
+    }
+
+    .hero-sub {
+      font-family: 'Cinzel', serif;
+      font-size: clamp(0.85rem, 2vw, 1.1rem);
+      color: var(--text-secondary);
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      margin-bottom: 2.5rem;
+      animation: fadeDown 1s ease 0.3s both;
+    }
+
+    .hero-desc {
+      max-width: 680px;
+      font-size: clamp(1rem, 2vw, 1.15rem);
+      color: var(--text-secondary);
+      margin-bottom: 3rem;
+      animation: fadeDown 1s ease 0.4s both;
+    }
+
+    .hero-cta {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      justify-content: center;
+      animation: fadeDown 1s ease 0.5s both;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 14px 32px;
+      border-radius: 8px;
+      font-size: 0.95rem;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      cursor: pointer;
+      border: none;
+    }
+
+    .btn-gold {
+      background: linear-gradient(135deg, var(--gold) 0%, var(--saffron) 100%);
+      color: #1a0f00;
+      box-shadow: 0 4px 24px rgba(212,168,67,0.35);
+    }
+    .btn-gold:hover { transform: translateY(-2px); box-shadow: 0 8px 32px rgba(212,168,67,0.55); }
+
+    .btn-outline {
+      background: transparent;
+      color: var(--gold);
+      border: 1px solid var(--border-bright);
+      backdrop-filter: blur(10px);
+    }
+    .btn-outline:hover { background: rgba(212,168,67,0.1); transform: translateY(-2px); }
+
+    .hero-scroll {
+      position: absolute;
+      bottom: 2rem;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      color: var(--text-dim);
+      font-size: 0.75rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      animation: fadeDown 1s ease 1s both;
+    }
+    .scroll-line {
+      width: 1px;
+      height: 48px;
+      background: linear-gradient(to bottom, var(--gold), transparent);
+      animation: scrollPulse 2s ease-in-out infinite;
+    }
+
+    /* ── Layout ── */
+    .container {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 0 2rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    .container-wide {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 2rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* ── Section Divider ── */
+    .divider {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin: 5rem auto 3rem;
+      max-width: 860px;
+      padding: 0 2rem;
+    }
+    .divider-line { flex: 1; height: 1px; background: linear-gradient(to right, transparent, var(--border-bright), transparent); }
+    .divider-symbol {
+      font-family: 'Cinzel', serif;
+      color: var(--gold);
+      font-size: 1.2rem;
+      white-space: nowrap;
+    }
+
+    /* ── Section Headers ── */
+    .section-label {
+      font-size: 0.72rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 0.75rem;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .section-label::before {
+      content: '';
+      width: 24px;
+      height: 1px;
+      background: var(--gold);
+    }
+
+    h2 {
+      font-family: 'Cinzel', serif;
+      font-size: clamp(1.6rem, 4vw, 2.4rem);
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 1.25rem;
+      line-height: 1.2;
+    }
+
+    h3 {
+      font-family: 'Cinzel', serif;
+      font-size: clamp(1.1rem, 2.5vw, 1.4rem);
+      font-weight: 600;
+      color: var(--gold-light);
+      margin: 2.5rem 0 1rem;
+    }
+
+    p { margin-bottom: 1.4rem; color: var(--text-secondary); font-size: 1.05rem; }
+
+    strong { color: var(--text-primary); font-weight: 600; }
+
+    blockquote {
+      border-left: 3px solid var(--gold);
+      padding: 1.2rem 1.8rem;
+      margin: 2rem 0;
+      background: rgba(212,168,67,0.05);
+      border-radius: 0 8px 8px 0;
+    }
+    blockquote p { color: var(--gold-light); font-style: italic; font-size: 1.15rem; margin: 0; }
+    blockquote cite { display: block; margin-top: 0.5rem; color: var(--text-dim); font-size: 0.85rem; font-style: normal; }
+
+    /* ── Cards ── */
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1.25rem;
+      margin: 2rem 0;
+    }
+
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.5rem;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+    .card:hover { background: var(--bg-card-hover); border-color: var(--border-bright); box-shadow: var(--glow); transform: translateY(-3px); }
+    .card:hover::before { opacity: 1; }
+
+    .card-icon { font-size: 2rem; margin-bottom: 0.75rem; }
+    .card h4 { font-family: 'Cinzel', serif; font-size: 1rem; color: var(--gold-light); margin-bottom: 0.5rem; }
+    .card p { font-size: 0.9rem; color: var(--text-secondary); margin: 0; }
+
+    /* ── Mission Timeline ── */
+    .timeline { position: relative; padding: 1rem 0; }
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 20px;
+      top: 0; bottom: 0;
+      width: 1px;
+      background: linear-gradient(to bottom, var(--gold), transparent);
+    }
+
+    .timeline-item {
+      display: flex;
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+      padding-left: 0.5rem;
+      opacity: 0;
+      transform: translateX(-20px);
+      transition: all 0.5s ease;
+    }
+    .timeline-item.visible { opacity: 1; transform: translateX(0); }
+
+    .timeline-dot {
+      width: 40px;
+      height: 40px;
+      min-width: 40px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--gold), var(--saffron));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Cinzel', serif;
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: #1a0f00;
+      box-shadow: 0 0 20px rgba(212,168,67,0.4);
+    }
+
+    .timeline-content { flex: 1; }
+    .timeline-content h4 { font-family: 'Cinzel', serif; color: var(--gold-light); font-size: 1rem; margin-bottom: 0.25rem; }
+    .timeline-content p { font-size: 0.9rem; margin: 0; color: var(--text-secondary); }
+    .timeline-tag {
+      display: inline-block;
+      font-size: 0.72rem;
+      padding: 2px 10px;
+      border-radius: 100px;
+      background: rgba(212,168,67,0.1);
+      border: 1px solid var(--border);
+      color: var(--gold-dim);
+      margin-bottom: 0.4rem;
+    }
+
+    /* ── Stats ── */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 1rem;
+      margin: 2rem 0;
+    }
+
+    .stat {
+      text-align: center;
+      padding: 1.5rem;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      transition: all 0.3s ease;
+    }
+    .stat:hover { border-color: var(--border-bright); box-shadow: var(--glow); }
+    .stat-number {
+      font-family: 'Cinzel', serif;
+      font-size: 2.2rem;
+      font-weight: 700;
+      background: linear-gradient(135deg, var(--gold-light), var(--saffron));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      display: block;
+    }
+    .stat-label { font-size: 0.8rem; color: var(--text-secondary); margin-top: 0.25rem; text-transform: uppercase; letter-spacing: 0.1em; }
+
+    /* ── AI Table ── */
+    .ai-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 1.5rem 0;
+      font-size: 0.9rem;
+    }
+    .ai-table th {
+      background: rgba(212,168,67,0.1);
+      color: var(--gold);
+      font-family: 'Cinzel', serif;
+      font-size: 0.8rem;
+      letter-spacing: 0.08em;
+      padding: 12px 16px;
+      text-align: left;
+      border-bottom: 1px solid var(--border-bright);
+    }
+    .ai-table td {
+      padding: 11px 16px;
+      border-bottom: 1px solid var(--border);
+      color: var(--text-secondary);
+    }
+    .ai-table tr:hover td { background: rgba(255,255,255,0.02); color: var(--text-primary); }
+    .ai-table td:first-child { color: var(--gold-light); font-weight: 500; }
+
+    /* ── Character cards ── */
+    .char-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 1rem;
+      margin: 2rem 0;
+    }
+
+    .char-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.25rem;
+      transition: all 0.3s ease;
+      cursor: default;
+    }
+    .char-card:hover { background: var(--bg-card-hover); border-color: var(--border-bright); transform: translateY(-4px); box-shadow: 0 12px 40px rgba(0,0,0,0.4); }
+    .char-card .emoji { font-size: 2rem; margin-bottom: 0.5rem; }
+    .char-card .name { font-family: 'Cinzel', serif; font-size: 0.95rem; color: var(--gold-light); margin-bottom: 0.25rem; }
+    .char-card .role { font-size: 0.78rem; color: var(--gold-dim); margin-bottom: 0.5rem; text-transform: uppercase; letter-spacing: 0.08em; }
+    .char-card .desc { font-size: 0.82rem; color: var(--text-secondary); }
+
+    /* ── Support Section ── */
+    .support-section {
+      background: linear-gradient(135deg, rgba(212,168,67,0.08) 0%, rgba(232,114,28,0.05) 100%);
+      border: 1px solid var(--border-bright);
+      border-radius: 20px;
+      padding: 3rem 2rem;
+      text-align: center;
+      margin: 4rem 0;
+      position: relative;
+      overflow: hidden;
+    }
+    .support-section::before {
+      content: '🙏';
+      position: absolute;
+      top: -20px; right: 2rem;
+      font-size: 8rem;
+      opacity: 0.04;
+      pointer-events: none;
+    }
+    .support-title { font-family: 'Cinzel', serif; font-size: 1.8rem; color: var(--gold-light); margin-bottom: 0.75rem; }
+    .support-desc { color: var(--text-secondary); max-width: 520px; margin: 0 auto 2rem; }
+    .support-btns { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+
+    /* ── Footer ── */
+    footer {
+      text-align: center;
+      padding: 4rem 2rem;
+      border-top: 1px solid var(--border);
+      color: var(--text-dim);
+      font-size: 0.85rem;
+      position: relative;
+      z-index: 1;
+    }
+    footer .footer-title {
+      font-family: 'Cinzel', serif;
+      font-size: 1.5rem;
+      color: var(--gold);
+      margin-bottom: 0.5rem;
+    }
+    .footer-links { display: flex; gap: 2rem; justify-content: center; margin: 1.5rem 0; flex-wrap: wrap; }
+    .footer-links a { color: var(--text-secondary); text-decoration: none; transition: color 0.2s; font-size: 0.9rem; }
+    .footer-links a:hover { color: var(--gold); }
+
+    /* ── Highlight pill ── */
+    .pill {
+      display: inline-block;
+      padding: 3px 12px;
+      background: rgba(212,168,67,0.12);
+      border: 1px solid var(--border);
+      border-radius: 100px;
+      font-size: 0.82rem;
+      color: var(--gold-light);
+      margin: 2px;
+    }
+
+    /* ── Progress bar ── */
+    .progress-row { margin: 0.6rem 0; }
+    .progress-label { display: flex; justify-content: space-between; font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 4px; }
+    .progress-label span:last-child { color: var(--gold); }
+    .progress-track { height: 6px; background: rgba(255,255,255,0.06); border-radius: 100px; overflow: hidden; }
+    .progress-fill {
+      height: 100%;
+      border-radius: 100px;
+      background: linear-gradient(90deg, var(--gold), var(--saffron));
+      width: 0%;
+      transition: width 1.2s ease;
+    }
+
+    /* ── Nav ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      padding: 1rem 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: rgba(8,8,16,0.8);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(212,168,67,0.08);
+      transition: all 0.3s;
+    }
+    .nav-brand { font-family: 'Cinzel', serif; font-size: 1.1rem; color: var(--gold); text-decoration: none; font-weight: 700; }
+    .nav-links { display: flex; gap: 2rem; }
+    .nav-links a { color: var(--text-secondary); text-decoration: none; font-size: 0.9rem; transition: color 0.2s; }
+    .nav-links a:hover { color: var(--gold); }
+    .nav-support {
+      background: linear-gradient(135deg, var(--gold), var(--saffron));
+      color: #1a0f00;
+      padding: 8px 20px;
+      border-radius: 6px;
+      text-decoration: none;
+      font-size: 0.85rem;
+      font-weight: 700;
+      transition: all 0.3s;
+    }
+    .nav-support:hover { box-shadow: 0 4px 20px rgba(212,168,67,0.5); transform: translateY(-1px); }
+
+    /* ── Animations ── */
+    @keyframes fadeDown {
+      from { opacity: 0; transform: translateY(-20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.5; transform: scale(0.8); }
+    }
+    @keyframes scrollPulse {
+      0%, 100% { opacity: 0.3; }
+      50% { opacity: 1; }
+    }
+    @keyframes float {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-10px); }
+    }
+
+    .fade-in {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .fade-in.visible { opacity: 1; transform: translateY(0); }
+
+    /* ── Responsive ── */
+    @media (max-width: 640px) {
+      nav .nav-links { display: none; }
+      .hero h1 { font-size: 2.8rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <canvas id="particles"></canvas>
+
+  <!-- Nav -->
+  <nav>
+    <a href="#" class="nav-brand">⚔️ RAM-G</a>
+    <div class="nav-links">
+      <a href="#vision">Vision</a>
+      <a href="#mission0">Mission 0</a>
+      <a href="#characters">Characters</a>
+      <a href="#ai">AI + Dev</a>
+    </div>
+    <a href="https://www.patreon.com/c/RamG_ThegamebasedonRamayana" target="_blank" class="nav-support">Support Us</a>
+  </nav>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="hero-badge"><span></span> Dev Blog — Post #01 &nbsp;·&nbsp; May 2025</div>
+    <div class="hero-sanskrit">यत्र रामो, तत्र धर्मः</div>
+    <h1>RAM-G</h1>
+    <p class="hero-sub">The Game Based on the Bharat Mythical Story — Ramayana</p>
+    <p class="hero-desc">
+      We are building something that has never existed — a full-scale action-adventure game
+      that faithfully brings the <strong>Valmiki Ramayana</strong> to life. This is our first dev blog.
+      The story of how it began, what we're building, and why it matters.
+    </p>
+    <div class="hero-cta">
+      <a href="https://www.patreon.com/c/RamG_ThegamebasedonRamayana" target="_blank" class="btn btn-gold">🎨 Support on Patreon</a>
+      <a href="https://github.com/vivek3071997/Ram-g" target="_blank" class="btn btn-outline">⭐ View on GitHub</a>
+    </div>
+    <div class="hero-scroll">
+      <div class="scroll-line"></div>
+      Scroll
+    </div>
+  </section>
+
+  <!-- Section 1: Vision -->
+  <div class="divider" id="vision">
+    <div class="divider-line"></div>
+    <div class="divider-symbol">✦ The Vision ✦</div>
+    <div class="divider-line"></div>
+  </div>
+
+  <div class="container fade-in">
+    <div class="section-label">Why we're building this</div>
+    <h2>Dharma Made Playable</h2>
+    <p>
+      Every culture has its mythology. Greece has God of War. Norse legends have their champions. But India — with the oldest, richest, most layered mythological tradition on Earth — has been waiting.
+    </p>
+    <p>
+      <strong>Ram-G is our answer.</strong> Not an adaptation. Not a retelling. The actual Ramayana — its characters, its weapons, its moral philosophy, its sacred geography — translated into a living, playable world.
+    </p>
+
+    <blockquote>
+      <p>"We didn't want to make a game about the Ramayana. We wanted to make a game <em>that is</em> the Ramayana."</p>
+      <cite>— Vivek, Lead Designer</cite>
+    </blockquote>
+
+    <p>
+      Every character in Ram-G has a canonical basis in Valmiki's Bal Kanda, Aranya Kanda, Sundara Kanda, and Yuddha Kanda.
+      Every weapon — every <em>astra</em> — works exactly as described in the original Sanskrit. The world is built from
+      Puranic descriptions of sacred geography. The music is composed in classical Indian ragas.
+    </p>
+    <p>
+      We are building for India. And we are building for the world.
+    </p>
+
+    <div class="card-grid">
+      <div class="card">
+        <div class="card-icon">🕉️</div>
+        <h4>Mythological Authenticity</h4>
+        <p>All characters, weapons, and story events verified against Valmiki Ramayana by Sanskrit consultants.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">🎭</div>
+        <h4>Multi-Protagonist Design</h4>
+        <p>7+ playable characters — each with entirely unique mechanics, stats, and narrative weight.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">⚡</div>
+        <h4>Mission Chain System</h4>
+        <p>A world-first mechanic where story "nerfs" are the gameplay transition — creating an unbroken narrative chain.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">🌏</div>
+        <h4>Built in India</h4>
+        <p>Sanskrit UI, Devanagari text, regional language support, classical ragas — for Bharat and the world.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Section 2: Mission 0 -->
+  <div class="divider" id="mission0">
+    <div class="divider-line"></div>
+    <div class="divider-symbol">✦ Mission 0 ✦</div>
+    <div class="divider-line"></div>
+  </div>
+
+  <div class="container fade-in">
+    <div class="section-label">Where the journey begins</div>
+    <h2>Kid Hanuman Chases the Sun</h2>
+
+    <p>
+      Before Rama. Before Lanka. Before the war — there is a golden morning on <strong>Mount Sumeru</strong>,
+      and a child who mistakes the rising sun for a ripe mango.
+    </p>
+    <p>
+      <strong>Mission 0</strong> is the prologue. You play as <strong>Kid Hanuman</strong> — a small, divine, impossibly powerful
+      Vanara child who climbs through four distinct zones: the Sacred Orchard, the Cliff Ascent, the Cloud Deck,
+      and the Storm Arena where Lord Indra awaits.
+    </p>
+    <p>
+      It ends with the <strong>Curse of Forgetfulness</strong> — Hanuman's powers are locked away by the Sage Council, and
+      the camera pulls back to reveal a baby crying in a palace crib in Ayodhya. <em>Prince Rama has been born.</em>
+    </p>
+
+    <h3>The Four Zones</h3>
+
+    <div class="timeline">
+      <div class="timeline-item">
+        <div class="timeline-dot">01</div>
+        <div class="timeline-content">
+          <div class="timeline-tag">Ground Level · 5:15 AM</div>
+          <h4>Mount Sumeru — Sacred Orchards</h4>
+          <p>Collect 7 sacred fruits for Mother Anjana. Chase Tyaksha imps who steal them. Master vine grappling and basic traversal.</p>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-dot">02</div>
+        <div class="timeline-content">
+          <div class="timeline-tag">Cliff Ascent · 4,000m Equivalent</div>
+          <h4>Peak Ascent — Cliff Traversal</h4>
+          <p>Solve 3 escalating Stone Windwheel puzzles to unlock Thermal Updraft columns. Wall-run, ledge-grab, and ascend the divine mountain.</p>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-dot">03</div>
+        <div class="timeline-content">
+          <div class="timeline-tag">Cloud Deck · Troposphere</div>
+          <h4>The Cloud Platforms</h4>
+          <p>Cross timed cloud platforms that dissolve after 3 seconds. Boss: <strong>Airavat</strong> — the colossal Celestial Elephant. Climb his tusks, tickle his ear, put him to sleep.</p>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-dot">04</div>
+        <div class="timeline-content">
+          <div class="timeline-tag">Storm Arena · Upper Stratosphere</div>
+          <h4>Lord Indra's Domain</h4>
+          <p>Bullet-hell boss fight on Indra's circular storm arena. Dodge lightning ring waves from the Vajra Core. Survive two chariot orbits — then grab Indra's golden crown to trigger the endgame cinematic.</p>
+        </div>
+      </div>
+    </div>
+
+    <h3>Mission 0 — By the Numbers</h3>
+    <div class="stats-grid">
+      <div class="stat">
+        <span class="stat-number">458</span>
+        <div class="stat-label">Total Tasks</div>
+      </div>
+      <div class="stat">
+        <span class="stat-number">947</span>
+        <div class="stat-label">Subtasks</div>
+      </div>
+      <div class="stat">
+        <span class="stat-number">44</span>
+        <div class="stat-label">Team Members</div>
+      </div>
+      <div class="stat">
+        <span class="stat-number">24</span>
+        <div class="stat-label">Weeks Planned</div>
+      </div>
+      <div class="stat">
+        <span class="stat-number">11</span>
+        <div class="stat-label">Dev Sections</div>
+      </div>
+      <div class="stat">
+        <span class="stat-number">7</span>
+        <div class="stat-label">Cinematics</div>
+      </div>
+    </div>
+
+    <h3>Development Roadmap — Mission 0</h3>
+
+    <div class="progress-row">
+      <div class="progress-label"><span>📐 Pre-Production & Design Docs</span><span>100%</span></div>
+      <div class="progress-track"><div class="progress-fill" data-width="100"></div></div>
+    </div>
+    <div class="progress-row">
+      <div class="progress-label"><span>🎨 Concept Art & References</span><span>10%</span></div>
+      <div class="progress-track"><div class="progress-fill" data-width="10"></div></div>
+    </div>
+    <div class="progress-row">
+      <div class="progress-label"><span>🧱 3D Modeling</span><span>0%</span></div>
+      <div class="progress-track"><div class="progress-fill" data-width="0"></div></div>
+    </div>
+    <div class="progress-row">
+      <div class="progress-label"><span>🎬 Animation</span><span>0%</span></div>
+      <div class="progress-track"><div class="progress-fill" data-width="0"></div></div>
+    </div>
+    <div class="progress-row">
+      <div class="progress-label"><span>⚙️ Gameplay Engineering</span><span>0%</span></div>
+      <div class="progress-track"><div class="progress-fill" data-width="0"></div></div>
+    </div>
+    <div class="progress-row">
+      <div class="progress-label"><span>🎵 Audio & Music</span><span>0%</span></div>
+      <div class="progress-track"><div class="progress-fill" data-width="0"></div></div>
+    </div>
+  </div>
+
+  <!-- Section 3: Characters -->
+  <div class="divider" id="characters">
+    <div class="divider-line"></div>
+    <div class="divider-symbol">✦ Characters ✦</div>
+    <div class="divider-line"></div>
+  </div>
+
+  <div class="container fade-in">
+    <div class="section-label">The Mission Chain Protagonists</div>
+    <h2>7 Heroes. 1 Unbroken Story.</h2>
+    <p>
+      Ram-G's most radical design choice is its <strong>Mission Chain Revelation System</strong>. Each mission ends
+      with the current protagonist being mechanically "nerfed" by a story event — and the next playable character
+      is revealed. This creates a continuous, deeply connected narrative while completely refreshing the gameplay loop.
+    </p>
+
+    <div class="char-grid">
+      <div class="char-card">
+        <div class="emoji">🐒</div>
+        <div class="name">Kid Hanuman</div>
+        <div class="role">Mission 0 Protagonist</div>
+        <div class="desc">Wind flight, tail grapple, divine aura. Nerfed by the Curse of Forgetfulness.</div>
+      </div>
+      <div class="char-card">
+        <div class="emoji">🏹</div>
+        <div class="name">Lord Rama</div>
+        <div class="role">Principal Protagonist</div>
+        <div class="desc">Astra invocation, Kodanda archery, Dharmic dialogue choices. 7th avatar of Vishnu.</div>
+      </div>
+      <div class="char-card">
+        <div class="emoji">🌸</div>
+        <div class="name">Sita</div>
+        <div class="role">Narrative Protagonist</div>
+        <div class="desc">Earth-element sanctuary wards, emotional resonance system. Incarnation of Goddess Lakshmi.</div>
+      </div>
+      <div class="char-card">
+        <div class="emoji">⚔️</div>
+        <div class="name">Lakshmana</div>
+        <div class="role">Companion Fighter</div>
+        <div class="desc">Twin blades, immunity to sleep status, infinite stamina mode. Avatar of Adi-Shesha.</div>
+      </div>
+      <div class="char-card">
+        <div class="emoji">🦅</div>
+        <div class="name">Jatayu</div>
+        <div class="role">Aerial Hero (Act 5)</div>
+        <div class="desc">Full flight combat, intercept mechanics, wing health system. Noble vulture king.</div>
+      </div>
+      <div class="char-card">
+        <div class="emoji">👑</div>
+        <div class="name">King Dasharatha</div>
+        <div class="role">Regent Protagonist</div>
+        <div class="desc">Palace politics, veteran warrior combat, oath system. Solar Dynasty king.</div>
+      </div>
+      <div class="char-card">
+        <div class="emoji">🦌</div>
+        <div class="name">Maricha</div>
+        <div class="role">Villain POV (Act 5)</div>
+        <div class="desc">Shape-shift to Golden Deer, stealth evasion, fear-based gameplay. A rare villain perspective.</div>
+      </div>
+    </div>
+
+    <h3>The Chain</h3>
+    <p>Each hand-off is both a story event and a mechanical system:</p>
+    <div style="overflow-x:auto; margin: 1rem 0;">
+      <table class="ai-table">
+        <thead>
+          <tr><th>From</th><th>Nerf Event</th><th>Next Protagonist</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Kid Hanuman</td><td>Curse of Forgetfulness (Vajra Strike)</td><td>Lord Rama</td></tr>
+          <tr><td>Lord Rama</td><td>Courtly Disarmament (Mithila court rules)</td><td>Sita</td></tr>
+          <tr><td>Sita</td><td>Ascetic Strip (14-year exile begins)</td><td>King Dasharatha</td></tr>
+          <tr><td>King Dasharatha</td><td>Shravana Kumar Curse (fatal grief)</td><td>Lakshmana</td></tr>
+          <tr><td>Lakshmana</td><td>Dark Asuric Mist (Sita abducted)</td><td>Maricha (villain)</td></tr>
+          <tr><td>Maricha</td><td>Lethal Arrow (Rama slays him)</td><td>Jatayu</td></tr>
+          <tr><td>Jatayu</td><td>Wing Clipping (Chandrahasa sword)</td><td>Hanuman (full power)</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Section 4: AI -->
+  <div class="divider" id="ai">
+    <div class="divider-line"></div>
+    <div class="divider-symbol">✦ AI + Dev ✦</div>
+    <div class="divider-line"></div>
+  </div>
+
+  <div class="container fade-in">
+    <div class="section-label">How we're building faster</div>
+    <h2>AI-Accelerated Indie Development</h2>
+    <p>
+      Ram-G is one of the first Indian mythology games to use a <strong>systematic AI integration pipeline</strong>
+      — not to replace artists, but to dramatically accelerate production timelines without sacrificing artistic vision.
+    </p>
+    <p>
+      Across Mission 0 alone, we've mapped <strong>41% of tasks as AI-assistable</strong>, saving an estimated
+      <strong>312 person-days</strong> of production time. Here's how each tool fits in:
+    </p>
+
+    <table class="ai-table">
+      <thead>
+        <tr><th>Phase</th><th>AI Tool</th><th>Role in Pipeline</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Concept Art</td><td>Midjourney, DALL-E 3, Adobe Firefly</td><td>Mood boards, character variation drafts</td></tr>
+        <tr><td>3D Base Mesh</td><td>Meshy AI, CSM.ai</td><td>Block mesh generation for sculpting</td></tr>
+        <tr><td>Textures</td><td>Adobe Firefly, Stable Diffusion</td><td>Albedo, roughness, fur pattern drafts</td></tr>
+        <tr><td>Script Writing</td><td>Claude, ChatGPT, Gemini</td><td>Script drafts, VA direction briefs, lore</td></tr>
+        <tr><td>Music</td><td>Suno AI, AIVA, Udio</td><td>Demo stems in Indian ragas for composer review</td></tr>
+        <tr><td>Sound FX</td><td>ElevenLabs Sound FX</td><td>Ambient loops, impact SFX prototypes</td></tr>
+        <tr><td>Code</td><td>GitHub Copilot, Claude</td><td>Gameplay systems, UI logic, shader graphs</td></tr>
+        <tr><td>Lip-sync</td><td>Speech Graphics AI</td><td>Phoneme-driven facial animation</td></tr>
+        <tr><td>LOD</td><td>InstaLOD</td><td>Automatic LOD generation for all assets</td></tr>
+      </tbody>
+    </table>
+
+    <blockquote>
+      <p>"The AI doesn't replace the artist. It gives them a head start — so they can spend their energy on what only a human can do: the soul of it."</p>
+      <cite>— Ram-G Development Philosophy</cite>
+    </blockquote>
+
+    <p>
+      Every script draft is reviewed and revised by our lead writer. Every AI-generated concept gets refined by a
+      human artist. Every AI music stem is arranged and recorded with live instruments. The AI handles the
+      <em>starting point</em>. The human handles the <em>finish</em>.
+    </p>
+
+    <h3>Cultural Authenticity — Non-Negotiable</h3>
+    <p>No AI makes cultural decisions. For Ram-G, every piece of Sanskrit dialogue, every sacred symbol, every divine attribute, and every costume element goes through human review:</p>
+
+    <div style="display: flex; flex-wrap: wrap; gap: 0.5rem; margin: 1rem 0;">
+      <span class="pill">📖 Valmiki Ramayana source texts</span>
+      <span class="pill">📖 Tulsidas Ramcharitmanas</span>
+      <span class="pill">🔤 Sanskrit consultant phoneme review</span>
+      <span class="pill">🏺 Puranic iconography verification</span>
+      <span class="pill">🎵 Classical raga selection</span>
+      <span class="pill">🌿 Canonical flora & fauna</span>
+      <span class="pill">✅ Pre-Gold cultural sign-off gate</span>
+    </div>
+  </div>
+
+  <!-- Support -->
+  <div class="container-wide fade-in">
+    <div class="support-section">
+      <div class="support-title">Help Us Build This</div>
+      <p class="support-desc">
+        Ram-G is 100% independent. Every contribution directly funds art, audio, live instrument recordings,
+        Sanskrit consultation, and development tools. Join us on this journey.
+      </p>
+      <div class="support-btns">
+        <a href="https://www.patreon.com/c/RamG_ThegamebasedonRamayana" target="_blank" class="btn btn-gold">🎨 Join on Patreon — Get Dev Updates</a>
+        <a href="https://ko-fi.com/viv9k" target="_blank" class="btn btn-outline">☕ One-Time Support on Ko-fi</a>
+      </div>
+      <p style="margin-top: 1.5rem; font-size: 0.85rem; color: var(--text-dim);">
+        Patreon supporters get exclusive access to: dev logs, concept art, GDD documents, early builds & behind-the-scenes updates.
+      </p>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-title">⚔️ RAM-G</div>
+    <p style="color: var(--text-dim); font-family: 'Noto Sans Devanagari', sans-serif; font-size: 1.1rem; margin: 0.5rem 0;">जय श्री राम 🙏</p>
+    <p style="color: var(--text-dim); font-size: 0.85rem;">Built with devotion — for Bharat and the world.</p>
+    <div class="footer-links">
+      <a href="https://github.com/vivek3071997/Ram-g" target="_blank">⭐ GitHub</a>
+      <a href="https://www.patreon.com/c/RamG_ThegamebasedonRamayana" target="_blank">🎨 Patreon</a>
+      <a href="https://ko-fi.com/viv9k" target="_blank">☕ Ko-fi</a>
+    </div>
+    <p style="color: var(--text-dim); font-size: 0.75rem;">© 2025 Ram-G Development. All Rights Reserved.</p>
+  </footer>
+
+  <script>
+    // ── Particle System ──
+    const canvas = document.getElementById('particles');
+    const ctx = canvas.getContext('2d');
+    let particles = [];
+
+    function resize() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+    resize();
+    window.addEventListener('resize', resize);
+
+    class Particle {
+      constructor() { this.reset(); }
+      reset() {
+        this.x = Math.random() * canvas.width;
+        this.y = Math.random() * canvas.height;
+        this.size = Math.random() * 1.5 + 0.3;
+        this.speedX = (Math.random() - 0.5) * 0.3;
+        this.speedY = -Math.random() * 0.4 - 0.1;
+        this.opacity = Math.random() * 0.5 + 0.1;
+        this.life = 1;
+      }
+      update() {
+        this.x += this.speedX;
+        this.y += this.speedY;
+        this.life -= 0.003;
+        if (this.life <= 0 || this.y < -10) this.reset();
+      }
+      draw() {
+        ctx.save();
+        ctx.globalAlpha = this.opacity * this.life;
+        ctx.fillStyle = `hsl(${35 + Math.random() * 20}, 80%, 60%)`;
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.restore();
+      }
+    }
+
+    for (let i = 0; i < 80; i++) particles.push(new Particle());
+
+    function animateParticles() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      particles.forEach(p => { p.update(); p.draw(); });
+      requestAnimationFrame(animateParticles);
+    }
+    animateParticles();
+
+    // ── Intersection Observer — fade-in ──
+    const faders = document.querySelectorAll('.fade-in, .timeline-item');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('visible');
+          // Progress bars
+          e.target.querySelectorAll('.progress-fill').forEach(bar => {
+            bar.style.width = bar.dataset.width + '%';
+          });
+        }
+      });
+    }, { threshold: 0.1 });
+
+    faders.forEach(el => observer.observe(el));
+
+    // Trigger progress bars if already visible on load
+    document.querySelectorAll('.progress-fill').forEach(bar => {
+      if (bar.closest('.fade-in.visible')) {
+        bar.style.width = bar.dataset.width + '%';
+      }
+    });
+  </script>
+
+</body>
+</html>
